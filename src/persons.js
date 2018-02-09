@@ -15,11 +15,12 @@ class Persons extends ds.Datastructure {
     this.data.push(person);
   }
 
-  //Random data from http://www.fakeaddressgenerator.com/World/Germany_address_generator
+  //Random data from http://www.fakeaddressgenerator.com/
   generateTestData() {
     this.addPerson('Mario', 'Wirtz', '03372 63 80 71', 'http://localhost:1337/adresses/0');
-    this.addPerson('Lisa', 'Pfeiffer', '09603 82 34 76', 'http://localhost:1337/adresses/0');
-    this.addPerson('Ralf', 'Engel', '0421 62 75 54', 'http://localhost:1337/adresses/0');
+    this.addPerson('Lisa', 'Pfeiffer', '09603 82 34 76', 'http://localhost:1337/adresses/1');
+    this.addPerson('Ralf', 'Engel', '0421 62 75 54', 'http://localhost:1337/adresses/2');
+    this.addPerson('Roland', 'Carroll', '0680 826 59 97', 'http://localhost:1337/adresses/2');
   }
 
   getTemplate() {

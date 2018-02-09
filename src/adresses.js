@@ -15,12 +15,12 @@ class Adresses extends ds.Datastructure {
     this.data.push(adress);
   }
 
-  //Random data from http://www.fakeaddressgenerator.com/World/Germany_address_generator
+  //Random data from http://www.fakeaddressgenerator.com/
   generateTestData() {
-    this.addAdress('Germany', 'Freistaat Bayern', 'Stephanskirchen', '83071', 'Jahnstrasse 31');
-    this.addAdress('1Germany', 'Freistaat Bayern', 'Stephanskirchen', '83071', 'Jahnstrasse 31');
-    this.addAdress('2Germany', 'Freistaat Bayern', 'Stephanskirchen', '83071', 'Jahnstrasse 31');
-    this.addAdress('3Germany', 'Freistaat Bayern', 'Stephanskirchen', '83071', 'Jahnstrasse 31');
+    this.addAdress('Germany', 'Bayern', 'Stephanskirchen', '83071', 'Jahnstrasse 31');
+    this.addAdress('Germany', 'Bayern', 'Dietfurt', '92343', 'Güntzelstrasse 6');
+    this.addAdress('Austria', 'Carinthia', 'Edern', '9560', 'Im Astenfeld 44');
+    this.addAdress('Austria', 'Upper Austria', 'Steinkirchen an der Traun', '4652', 'Alpenstrasse 53');
   }
 
   getTemplate() {
