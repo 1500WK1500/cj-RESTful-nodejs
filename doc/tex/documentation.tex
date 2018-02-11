@@ -1,10 +1,14 @@
-\documentclass[]{article}
+\documentclass[listof=totoc]{article}
 \usepackage[numbers]{natbib}					%use numbers for litrature references
 \usepackage[footnote]{acronym}					%footnotes for acronyms
 \usepackage[utf8]{inputenc}						%utf8 support (ö, ü, ä, ...)
 \usepackage[ngerman]{babel}						%german names for table of contens and litratur
 \usepackage[nottoc,notlot,notlof]{tocbibind}	%adds bibliographie to the table of contens
 \usepackage{a4wide}
+
+\input{xmllistings.tex}
+\input{jsonlistings.tex}
+\input{javascriptlistings.tex}
 
 
 %opening
@@ -22,6 +26,8 @@
 	\newpage
 	
 	\tableofcontents 
+	\lstlistoflistings
+	
 	\newpage
 	
 	\section{Allgemeines über \ac{REST}}
@@ -36,7 +42,7 @@
 		\item  \ac{HATEOAS}
 	\end{itemize}
 	\subsection{Ressourcen}
-	Die Ressourcen sind unter einer eindeutigen Adresse (\ac{URI}) erreichbar und können unter verschiedenen Repräsentationen dargestellt werden:
+	Die Ressourcen sind unter einer eindeutigen Adresse (\ac{URI}) erreichbar und können unter verschiedenen Repräsentationen dargestellt werden. Siehe Kapitel \ref{subsec:Repraesentation}.
 	\newline \newline
 	Zum Beispiel kann ein Ressource folgende \ac{URI} haben "http://ipadress:port/path/Ressource
 	%Die Repräsentation kann jedoch in verschiedenen Formaten erfolgen.
@@ -72,7 +78,60 @@
 	\end{tabular} 
 	\end{center}
 	\newpage
-	asdasd
+	\subsubsection{GET}
+	Um eine Ressource anzuzeigen wird die GET-Operation verwendet. 
+	\subsubsection{POST}
+	\subsubsection{PUT}
+	\subsubsection{DELETE}
+	\subsection{Repräsentation}\label{subsec:Repraesentation}
+	Eine Ressource kann unterschiedliche Repräsentationen besitzen.
+	Als Beispiel wird als eine Ressource eine Person betrachtet. Diese enthält folgende Daten:
+	\begin{itemize} 
+		\setlength{\itemsep}{0pt} 
+		\item Vorname
+		\item Nachname
+		\item Telefonnummer
+	\end{itemize}
+	Die Person kann in verschiedenen Formaten dargestellt werden. 
+	In \ac{JSON} würde die Repräsentation so aussehen:
+	
+
+	\begin{lstlisting}[language=json,caption=\ac{JSON}-Repräsentation (application/json)]
+		{"vorname":"Hans","nachname":"Mueller","telefonnummer":"0680123456789"}
+	\end{lstlisting}
+	
+	Die selbe Person kann allerdings auch in \ac{XML} dargestellt werden:
+	\begin{lstlisting}[language=XML,caption=\ac{XML}-Repräsentation (application/xml)]
+	<?xml version="1.0" encoding="UTF-8"?>
+	<root>
+		<nachname>Mueller</nachname>
+		<telefonnummer>0680123456789</telefonnummer>
+		<vorname>Hans</vorname>
+	</root>
+	\end{lstlisting}
+	\newpage
+	
+	
+	\subsection{Zustandslose Kommunikation}
+	Eine Vorraussetzung für eine \ac{REST}ful \ac{API} ist die Zustandslosigkeit. Weder Server noch Client sollten Zustandsinformationen speicher. Das heißt Anfragen an den Server sollten in sich geschlossen sein. Dies hat den Vorteil der einfachen Skalierbarkeit. Anfragen können an unterschiedliche Server verteilt werden. \cite[p.~6]{RESTBOOK}
+	\newpage
+	
+	\section{Beispielprogramm}
+	Da \ac{REST} nur ein Programmierparadigma ist, hat man sehr viel Möglichkeiten bei der Implementierung. Programmiersprache, Repräsentation der Daten sowie Protokoll für die Datenübertragung sind nicht vorgegeben durch \ac{REST}. Deshalb ist der erste Schritt für die Implementierung notwendig zu entscheiden welche Tools verwendet werden sollen.
+	\subsection{Programmiersprache}
+	Als Programmiersprache wird in diesem Beispiel Node.js$^{\tiny{\textregistered}}$ verwendet.
+	\begin{quote}
+		"Node.js® ist eine JavaScript-Laufzeitumgebung, die auf Chromes V8 JavaScript-Engine basiert. Durch ein Event-basiertes, blockierungsfreies I/O-Modell ist Node.js schlank und effizient."
+		\footnote{https://nodejs.org/de/}
+	\end{quote}
+	\subsection{Daten Repräsentation}
+	Da Ressourcen durch unterschiedliche Repräsentationen dargestellt werden können, könnten prinzipiell auch mehrere Repräsentationen vom Beispielprogramm unterstützt werden. Der Einfachheit halber wird allerdings nur ein Format verwendet.
+	\ac{JSON} bietet sich aufgrund seiner weiten Verbreitung und Kompatibilität mit JavaScript an. Doch \ac{JSON} alleine bietet keine Verlinkungen zwischen Datensätzen an und erfüllt deshalb nicht \ac{HATEOAS}. Deshalb gibt es zahlreiche Formate die auf \ac{JSON} basieren aber zusätzlich auch \ac{HATEOAS} unterstützen. \cite{HATEOAS_FORMATS}
+	\begin{itemize} 
+		\setlength{\itemsep}{0pt} 
+		\item HAL
+		\item Collection+JSON
+	\end{itemize}
 	
 	\newpage
 	
@@ -85,8 +144,11 @@
 		\acro{HTTP}{Hypertext Transfer Protocol}
 		\acro{HATEOAS}{Hypermedia as the Engine of Application State}
 		\acro{CRUD}{Create Read Update Delete}
+		\acro{JSON}{JavaScript Object Notation}
+		\acro{XML}{Extensible Markup Language}
 	\end{acronym}
 	\newpage
+
 	
 
 	\bibliographystyle{plainnat}
