@@ -1,0 +1,6 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Allgemeines \IeC {\"u}ber \ac {REST}}{3}
+\contentsline {subsection}{\numberline {1.1}Ressourcen}{3}
+\contentsline {subsection}{\numberline {1.2}\ac {HTTP}-Methoden}{3}
+\contentsline {section}{Abk\IeC {\"u}rzungen}{5}
+\contentsline {section}{Literaturverzeichnis}{6}

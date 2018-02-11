@@ -1,0 +1,32 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bojinov(2015)]{RESTBOOK}
+Valentin Bojinov.
+\newblock \emph{RESTful Web API Design with Node.js}.
+\newblock Packt Publishing, 2015.
+\newblock ISBN 978-1-78398-586-9.
+
+\bibitem[Fielding(2000)]{REST_THESIS}
+Roy Fielding.
+\newblock \emph{Architectural Styles and the Design of Network-based Software
+  Architectures}.
+\newblock PhD thesis, University of California, 2000.
+\newblock
+  \url{https://www.ics.uci.edu/fielding/pubs/dissertation/fielding\_dissertation\_2up.pdf},
+  visited 2018-02-09.
+
+\bibitem[Fielding et~al.(1999)Fielding, Gettys, Mogul, Nielsen, Masinter,
+  Leach, and Berners-Lee]{RFC2616}
+Roy~T. Fielding, James Gettys, Jeffrey~C. Mogul, Henrik~Frystyk Nielsen, Larry
+  Masinter, Paul~J. Leach, and Tim Berners-Lee.
+\newblock Hypertext transfer protocol -- http/1.1.
+\newblock RFC 2616, RFC Editor, June 1999.
+\newblock URL \url{http://www.rfc-editor.org/rfc/rfc2616.txt}.
+\newblock visited 2018-02-09.
+
+\end{thebibliography}

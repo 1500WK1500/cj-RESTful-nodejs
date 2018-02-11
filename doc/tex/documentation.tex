@@ -1,0 +1,94 @@
+\documentclass[]{article}
+\usepackage[numbers]{natbib}					%use numbers for litrature references
+\usepackage[footnote]{acronym}					%footnotes for acronyms
+\usepackage[utf8]{inputenc}						%utf8 support (ö, ü, ä, ...)
+\usepackage[ngerman]{babel}						%german names for table of contens and litratur
+\usepackage[nottoc,notlot,notlof]{tocbibind}	%adds bibliographie to the table of contens
+\usepackage{a4wide}
+
+
+%opening
+\title{RESTful API mit node.js}
+\author{AUTHOR}
+
+\begin{document}
+	\maketitle
+	\begin{abstract}
+		\begin{center}
+			Dieses Dokument beschriebt die Theorie hinter \ac{REST} und \\
+			die Implementierung einer RESTful \ac{API} mithilfe von node.js
+		\end{center}
+	\end{abstract}
+	\newpage
+	
+	\tableofcontents 
+	\newpage
+	
+	\section{Allgemeines über \ac{REST}}
+	\ac{REST} ist ein Programmierparadigma und wurde von Roy Fielding in seiner Dissertation\cite{REST_THESIS} spezifiziert.
+	\newline \newline
+	Die wichtigsten Eigenschaften\cite[p.~2]{RESTBOOK} sind:
+	\begin{itemize}  
+		\item Alles ist eine Ressource und jede ist mit einer eindeutigen Adresse identifizierbar (\ac{URI})
+		\item Verwendung von Standard-\ac{HTTP} Methoden\footnote{Keine strenge Voraussetzung für \ac{REST}, in der Praxis wird aber hauptsächlich \ac{HTTP} verwendet}
+		\item Ressourcen können mehrerer Repräsentationen besitzen
+		\item Zustandslose Kommunikation
+		\item  \ac{HATEOAS}
+	\end{itemize}
+	\subsection{Ressourcen}
+	Die Ressourcen sind unter einer eindeutigen Adresse (\ac{URI}) erreichbar und können unter verschiedenen Repräsentationen dargestellt werden:
+	\newline \newline
+	Zum Beispiel kann ein Ressource folgende \ac{URI} haben "http://ipadress:port/path/Ressource
+	%Die Repräsentation kann jedoch in verschiedenen Formaten erfolgen.
+	\subsection{\ac{HTTP}-Methoden}
+	Die Verwendung von \ac{HTTP}-Methoden ist keine strickte Voraussetzung für REST.
+	In der Praxis wird jedoch hauptsächlich \ac{HTTP} verwendet für REST. Deshalb wird hier auch nur auf die Implementierung mit \ac{HTTP}-Methoden eingegangen.
+	\newline \newline
+	Es sind folgende Operationen laut RFC2616\cite{RFC2616} im \ac{HTTP}-Protokoll möglich:
+	\begin{itemize} 
+		\setlength{\itemsep}{0pt} 
+		\item GET
+		\item POST
+		\item PUT
+		\item DELETE
+		\item HEAD
+		\item OPTIONS
+		\item TRACE
+		\item CONNECT
+	\end{itemize}
+	\begin{center}
+	Für \ac{REST} werden die folgenden 4 \ac{CRUD}-Operationen verwendet. 
+	\newline \newline
+	\begin{tabular}{|c|c|}
+		\hline 
+		Create & POST \\ 
+		\hline 
+		Read & GET \\ 
+		\hline 
+		Update & PUT \\ 
+		\hline 
+		Delete & DELETE \\ 
+		\hline 
+	\end{tabular} 
+	\end{center}
+	\newpage
+	asdasd
+	
+	\newpage
+	
+	\setcounter{secnumdepth}{0}	%disable numbering of sections
+	\section{Abkürzungen}
+	\begin{acronym}[HTTP]
+		\acro{REST}{Representational State Transfer}
+		\acro{API}{Application Programming Interface}
+		\acro{URI}{Unique Adress Identifier}
+		\acro{HTTP}{Hypertext Transfer Protocol}
+		\acro{HATEOAS}{Hypermedia as the Engine of Application State}
+		\acro{CRUD}{Create Read Update Delete}
+	\end{acronym}
+	\newpage
+	
+
+	\bibliographystyle{plainnat}
+	\bibliography{literatur}
+\end{document}
