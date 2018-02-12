@@ -1,0 +1,15 @@
+\BOOKMARK [1][-]{section.1}{Allgemeines \374ber REST}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Ressourcen}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{HTTP-Methoden}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.2.1}{POST - Create}{subsection.1.2}% 4
+\BOOKMARK [3][-]{subsubsection.1.2.2}{GET - Read}{subsection.1.2}% 5
+\BOOKMARK [3][-]{subsubsection.1.2.3}{PUT - Update}{subsection.1.2}% 6
+\BOOKMARK [3][-]{subsubsection.1.2.4}{DELETE - Delete}{subsection.1.2}% 7
+\BOOKMARK [2][-]{subsection.1.3}{Repr\344sentation}{section.1}% 8
+\BOOKMARK [2][-]{subsection.1.4}{Zustandslose Kommunikation}{section.1}% 9
+\BOOKMARK [2][-]{subsection.1.5}{Hypermedia as the Engine of Application State}{section.1}% 10
+\BOOKMARK [1][-]{section.2}{Beispielprogramm}{}% 11
+\BOOKMARK [2][-]{subsection.2.1}{Programmiersprache}{section.2}% 12
+\BOOKMARK [2][-]{subsection.2.2}{Daten Repr\344sentation}{section.2}% 13
+\BOOKMARK [1][-]{section*.11}{Abk\374rzungen}{}% 14
+\BOOKMARK [1][-]{section*.12}{Literaturverzeichnis}{}% 15

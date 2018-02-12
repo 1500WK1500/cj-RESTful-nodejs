@@ -4,7 +4,15 @@
 \usepackage[utf8]{inputenc}						%utf8 support (ö, ü, ä, ...)
 \usepackage[ngerman]{babel}						%german names for table of contens and litratur
 \usepackage[nottoc,notlot,notlof]{tocbibind}	%adds bibliographie to the table of contens
-\usepackage{a4wide}
+\usepackage{a4wide}								%use more space of the page
+\usepackage{hyperref}							%clickable links
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
 
 \input{xmllistings.tex}
 \input{jsonlistings.tex}
@@ -44,7 +52,7 @@
 	\subsection{Ressourcen}
 	Die Ressourcen sind unter einer eindeutigen Adresse (\ac{URI}) erreichbar und können unter verschiedenen Repräsentationen dargestellt werden. Siehe Kapitel \ref{subsec:Repraesentation}.
 	\newline \newline
-	Zum Beispiel kann ein Ressource folgende \ac{URI} haben "http://ipadress:port/path/Ressource
+	Zum Beispiel kann ein Ressource folgende \ac{URI} haben "http://ipaddress:port/path/Ressource"
 	%Die Repräsentation kann jedoch in verschiedenen Formaten erfolgen.
 	\subsection{\ac{HTTP}-Methoden}
 	Die Verwendung von \ac{HTTP}-Methoden ist keine strickte Voraussetzung für REST.
@@ -78,11 +86,51 @@
 	\end{tabular} 
 	\end{center}
 	\newpage
-	\subsubsection{GET}
+	\subsubsection{POST - Create}
+	Erzeugt eine neue Ressource.
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		POST & /Persons & Ressource Data & /Persons/123 \\ 
+		\hline 
+	\end{tabular} 
+	\newline
+	\subsubsection{GET - Read}
 	Um eine Ressource anzuzeigen wird die GET-Operation verwendet. 
-	\subsubsection{POST}
-	\subsubsection{PUT}
-	\subsubsection{DELETE}
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		GET & /Persons/123 & none & Resource Data \\ 
+		\hline 
+	\end{tabular} 
+	\subsubsection{PUT - Update}
+	Verändert eine bestehende Ressource.
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		PUT & /Persons/123 & Ressource Data & none \\ 
+		\hline 
+	\end{tabular} 
+	\subsubsection{DELETE - Delete}
+	Löscht eine Ressource.
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		DELETE & /Persons/123 & none & none \\ 
+		\hline 
+	\end{tabular} 
 	\subsection{Repräsentation}\label{subsec:Repraesentation}
 	Eine Ressource kann unterschiedliche Repräsentationen besitzen.
 	Als Beispiel wird als eine Ressource eine Person betrachtet. Diese enthält folgende Daten:
@@ -95,7 +143,7 @@
 	Die Person kann in verschiedenen Formaten dargestellt werden. 
 	In \ac{JSON} würde die Repräsentation so aussehen:
 	
-
+	
 	\begin{lstlisting}[language=json,caption=\ac{JSON}-Repräsentation (application/json)]
 		{"vorname":"Hans","nachname":"Mueller","telefonnummer":"0680123456789"}
 	\end{lstlisting}
@@ -113,15 +161,19 @@
 	
 	
 	\subsection{Zustandslose Kommunikation}
-	Eine Vorraussetzung für eine \ac{REST}ful \ac{API} ist die Zustandslosigkeit. Weder Server noch Client sollten Zustandsinformationen speicher. Das heißt Anfragen an den Server sollten in sich geschlossen sein. Dies hat den Vorteil der einfachen Skalierbarkeit. Anfragen können an unterschiedliche Server verteilt werden. \cite[p.~6]{RESTBOOK}
+	Eine Vorraussetzung für eine \ac{REST}ful \ac{API} ist die Zustandslosigkeit. Weder Server noch Client sollten Zustandsinformationen speicher. Das heißt Anfragen an den Server sollten in sich geschlossen sein. Dies hat den Vorteil der einfachen Skalierbarkeit, das heißt Anfragen können an unterschiedliche Server verteilt werden. \cite[p.~6]{RESTBOOK}
+	
+	\subsection{Hypermedia as the Engine of Application State}
+	\ac{HATEOAS} ist laut Roy Fielding eine Voraussetzung für eine \ac{REST}ful \ac{API}.\cite{HATEOAS_ROY}
+	Dazu müssen Ressourcen Links (Hypermedia) zu anderen Ressourcen enthalten können. Somit kann man von einer Ressource zur Nächsten navigieren.
 	\newpage
 	
 	\section{Beispielprogramm}
 	Da \ac{REST} nur ein Programmierparadigma ist, hat man sehr viel Möglichkeiten bei der Implementierung. Programmiersprache, Repräsentation der Daten sowie Protokoll für die Datenübertragung sind nicht vorgegeben durch \ac{REST}. Deshalb ist der erste Schritt für die Implementierung notwendig zu entscheiden welche Tools verwendet werden sollen.
 	\subsection{Programmiersprache}
-	Als Programmiersprache wird in diesem Beispiel Node.js$^{\tiny{\textregistered}}$ verwendet.
+	Als Programmiersprache wird in diesem Beispiel Node.js verwendet.
 	\begin{quote}
-		"Node.js® ist eine JavaScript-Laufzeitumgebung, die auf Chromes V8 JavaScript-Engine basiert. Durch ein Event-basiertes, blockierungsfreies I/O-Modell ist Node.js schlank und effizient."
+		"Node.js$^{\tiny{\textregistered}}$ ist eine JavaScript-Laufzeitumgebung, die auf Chromes V8 JavaScript-Engine basiert. Durch ein Event-basiertes, blockierungsfreies I/O-Modell ist Node.js schlank und effizient."
 		\footnote{https://nodejs.org/de/}
 	\end{quote}
 	\subsection{Daten Repräsentation}
@@ -137,7 +189,7 @@
 	
 	\setcounter{secnumdepth}{0}	%disable numbering of sections
 	\section{Abkürzungen}
-	\begin{acronym}[HTTP]
+	\begin{acronym}[HATEOAS]
 		\acro{REST}{Representational State Transfer}
 		\acro{API}{Application Programming Interface}
 		\acro{URI}{Unique Adress Identifier}
