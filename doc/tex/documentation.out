@@ -11,5 +11,17 @@
 \BOOKMARK [1][-]{section.2}{Beispielprogramm}{}% 11
 \BOOKMARK [2][-]{subsection.2.1}{Programmiersprache}{section.2}% 12
 \BOOKMARK [2][-]{subsection.2.2}{Daten Repr\344sentation}{section.2}% 13
-\BOOKMARK [1][-]{section*.11}{Abk\374rzungen}{}% 14
-\BOOKMARK [1][-]{section*.12}{Literaturverzeichnis}{}% 15
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Collection+JSON}{subsection.2.2}% 14
+\BOOKMARK [2][-]{subsection.2.3}{Protokoll}{section.2}% 15
+\BOOKMARK [2][-]{subsection.2.4}{API Beschreibung}{section.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.4.1}{POST /persons}{subsection.2.4}% 17
+\BOOKMARK [3][-]{subsubsection.2.4.2}{POST /addresses}{subsection.2.4}% 18
+\BOOKMARK [3][-]{subsubsection.2.4.3}{GET /persons}{subsection.2.4}% 19
+\BOOKMARK [3][-]{subsubsection.2.4.4}{GET /addresses}{subsection.2.4}% 20
+\BOOKMARK [3][-]{subsubsection.2.4.5}{PUT /persons}{subsection.2.4}% 21
+\BOOKMARK [3][-]{subsubsection.2.4.6}{PUT /addresses}{subsection.2.4}% 22
+\BOOKMARK [3][-]{subsubsection.2.4.7}{DELETE /persons}{subsection.2.4}% 23
+\BOOKMARK [3][-]{subsubsection.2.4.8}{DELETE /addresses}{subsection.2.4}% 24
+\BOOKMARK [2][-]{subsection.2.5}{Source Code}{section.2}% 25
+\BOOKMARK [1][-]{section*.14}{Abk\374rzungen}{}% 26
+\BOOKMARK [1][-]{section*.15}{Literaturverzeichnis}{}% 27

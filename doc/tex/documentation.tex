@@ -165,7 +165,10 @@
 	
 	\subsection{Hypermedia as the Engine of Application State}
 	\ac{HATEOAS} ist laut Roy Fielding eine Voraussetzung für eine \ac{REST}ful \ac{API}.\cite{HATEOAS_ROY}
-	Dazu müssen Ressourcen Links (Hypermedia) zu anderen Ressourcen enthalten können. Somit kann man von einer Ressource zur Nächsten navigieren.
+	Dazu müssen Ressourcen Links (Hypermedia) zu anderen Ressourcen enthalten können. Es sollte somit möglich sein nur durch Kenntnis der Root-\ac{URI} zu allen möglichen \ac{URI}s weiter zu navigieren. 
+	Somit kann man von einer Ressource zur Nächsten navigieren. 
+	\newline
+	Oft werden jedoch auch fälschlicherweise \ac{API}s als \ac{REST}ful bezeichnet die nicht \ac{HATEOAS} verwenden.
 	\newpage
 	
 	\section{Beispielprogramm}
@@ -181,9 +184,64 @@
 	\ac{JSON} bietet sich aufgrund seiner weiten Verbreitung und Kompatibilität mit JavaScript an. Doch \ac{JSON} alleine bietet keine Verlinkungen zwischen Datensätzen an und erfüllt deshalb nicht \ac{HATEOAS}. Deshalb gibt es zahlreiche Formate die auf \ac{JSON} basieren aber zusätzlich auch \ac{HATEOAS} unterstützen. \cite{HATEOAS_FORMATS}
 	\begin{itemize} 
 		\setlength{\itemsep}{0pt} 
-		\item HAL
-		\item Collection+JSON
+		\item \ac{JSON-LD}
+		\item \ac{HAL}
+		\item Collection+\ac{JSON}
+		\item \ac{SIREN}
 	\end{itemize}
+	Für dieses Beispiel wurde Collection+\ac{JSON} ausgewählt.
+		\newpage
+	\subsubsection{Collection+\ac{JSON}}
+	Wenn beispielsweise die Root-\ac{URI} aufgerufen wird, liefert der Server folgende Antwort. 
+	\begin{lstlisting}[language=json,caption=Collection+\ac{JSON}-Repräsentation (application/vnd.collection+json)]
+	{
+		"collection": {
+			"version": "1.0",
+			"href": "http://localhost:1337",
+			"items": [],
+			"links": [
+				{
+					"rel": "home",
+					"href": "http://localhost:1337",
+					"promt": ""
+				},
+				{
+					"rel": "persons",
+					"href": "http://localhost:1337/persons",
+					"promt": ""
+				},
+				{
+					"rel": "adresses",
+					"href": "http://localhost:1337/adresses",
+					"promt": ""
+				}
+			],
+			"queries": [],
+			"templates": []
+		}
+	}
+	\end{lstlisting}
+	Man sieht, dass man nun 2 Möglichkeiten hat weiter zu navigieren.
+	\newline
+	"'http://localhost:1337/persons"' oder "'http://localhost:1337/adresses"'
+	
+	\subsection{Protokoll}
+	Als Protokoll wird \ac{HTTP} verwendet, weil es das am meisten verwendete für \ac{REST} ist.
+	\newpage
+	
+	\subsection{\ac{API} Beschreibung}
+	\subsubsection{POST /persons}
+	\subsubsection{POST /addresses}
+	\subsubsection{GET /persons}
+	\subsubsection{GET /addresses}
+	\subsubsection{PUT /persons}
+	\subsubsection{PUT /addresses}
+	\subsubsection{DELETE /persons}
+	\subsubsection{DELETE /addresses}
+	\subsection{Source Code}
+	
+	
+	
 	
 	\newpage
 	
@@ -198,6 +256,10 @@
 		\acro{CRUD}{Create Read Update Delete}
 		\acro{JSON}{JavaScript Object Notation}
 		\acro{XML}{Extensible Markup Language}
+		\acro{JSON-LD}{\ac{JSON} for Linked Documents}
+		\acro{HAL}{Hypertext Application Language}
+		\acro{SIREN}{Structured Interface for Representing Entities}
+		
 	\end{acronym}
 	\newpage
 
