@@ -19,7 +19,7 @@ function getRelPath(req) {
   if (path.split('/').length < 2) {
     return ('');
   }
-  return (path.split('/')[1]); //Get the relative path (valid paths are: persons, adresses)
+  return (path.split('/')[1]); //Get the relative path (valid paths are: persons, addresses)
 }
 
 function getIdPath(req) {
@@ -27,7 +27,7 @@ function getIdPath(req) {
   if (path.split('/').length < 3) {
     return ('');
   }
-  return (path.split('/')[2]); //Get the relative path (valid paths are: persons, adresses)
+  return (path.split('/')[2]); //Get the relative path (valid paths are: persons, addresses)
 }
 
 exports.getBase = getBase;
