@@ -11,17 +11,18 @@
 \BOOKMARK [1][-]{section.2}{Beispielprogramm}{}% 11
 \BOOKMARK [2][-]{subsection.2.1}{Programmiersprache}{section.2}% 12
 \BOOKMARK [2][-]{subsection.2.2}{Daten Repr\344sentation}{section.2}% 13
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Collection+JSON}{subsection.2.2}% 14
-\BOOKMARK [2][-]{subsection.2.3}{Protokoll}{section.2}% 15
-\BOOKMARK [2][-]{subsection.2.4}{API Beschreibung}{section.2}% 16
-\BOOKMARK [3][-]{subsubsection.2.4.1}{POST /persons}{subsection.2.4}% 17
-\BOOKMARK [3][-]{subsubsection.2.4.2}{POST /addresses}{subsection.2.4}% 18
-\BOOKMARK [3][-]{subsubsection.2.4.3}{GET /persons}{subsection.2.4}% 19
-\BOOKMARK [3][-]{subsubsection.2.4.4}{GET /addresses}{subsection.2.4}% 20
-\BOOKMARK [3][-]{subsubsection.2.4.5}{PUT /persons}{subsection.2.4}% 21
-\BOOKMARK [3][-]{subsubsection.2.4.6}{PUT /addresses}{subsection.2.4}% 22
-\BOOKMARK [3][-]{subsubsection.2.4.7}{DELETE /persons}{subsection.2.4}% 23
-\BOOKMARK [3][-]{subsubsection.2.4.8}{DELETE /addresses}{subsection.2.4}% 24
-\BOOKMARK [2][-]{subsection.2.5}{Source Code}{section.2}% 25
-\BOOKMARK [1][-]{section*.14}{Abk\374rzungen}{}% 26
-\BOOKMARK [1][-]{section*.15}{Literaturverzeichnis}{}% 27
+\BOOKMARK [2][-]{subsection.2.3}{Datenbank}{section.2}% 14
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Collection+JSON}{subsection.2.3}% 15
+\BOOKMARK [2][-]{subsection.2.4}{Protokoll}{section.2}% 16
+\BOOKMARK [2][-]{subsection.2.5}{API Beschreibung}{section.2}% 17
+\BOOKMARK [3][-]{subsubsection.2.5.1}{POST /persons}{subsection.2.5}% 18
+\BOOKMARK [3][-]{subsubsection.2.5.2}{POST /addresses}{subsection.2.5}% 19
+\BOOKMARK [3][-]{subsubsection.2.5.3}{GET /persons}{subsection.2.5}% 20
+\BOOKMARK [3][-]{subsubsection.2.5.4}{GET /addresses}{subsection.2.5}% 21
+\BOOKMARK [3][-]{subsubsection.2.5.5}{PUT /persons}{subsection.2.5}% 22
+\BOOKMARK [3][-]{subsubsection.2.5.6}{PUT /addresses}{subsection.2.5}% 23
+\BOOKMARK [3][-]{subsubsection.2.5.7}{DELETE /persons}{subsection.2.5}% 24
+\BOOKMARK [3][-]{subsubsection.2.5.8}{DELETE /addresses}{subsection.2.5}% 25
+\BOOKMARK [2][-]{subsection.2.6}{Source Code}{section.2}% 26
+\BOOKMARK [1][-]{section*.16}{Abk\374rzungen}{}% 27
+\BOOKMARK [1][-]{section*.17}{Literaturverzeichnis}{}% 28

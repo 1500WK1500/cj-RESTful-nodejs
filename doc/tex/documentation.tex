@@ -174,7 +174,7 @@
 	\section{Beispielprogramm}
 	Da \ac{REST} nur ein Programmierparadigma ist, hat man sehr viel Möglichkeiten bei der Implementierung. Programmiersprache, Repräsentation der Daten sowie Protokoll für die Datenübertragung sind nicht vorgegeben durch \ac{REST}. Deshalb ist der erste Schritt für die Implementierung notwendig zu entscheiden welche Tools verwendet werden sollen.
 	\subsection{Programmiersprache}
-	Als Programmiersprache wird in diesem Beispiel Node.js verwendet.
+	Als Programmiersprache wird in diesem Beispiel Node.js in der Version v6.11.4 verwendet.
 	\begin{quote}
 		"Node.js$^{\tiny{\textregistered}}$ ist eine JavaScript-Laufzeitumgebung, die auf Chromes V8 JavaScript-Engine basiert. Durch ein Event-basiertes, blockierungsfreies I/O-Modell ist Node.js schlank und effizient."
 		\footnote{https://nodejs.org/de/}
@@ -189,8 +189,13 @@
 		\item Collection+\ac{JSON}
 		\item \ac{SIREN}
 	\end{itemize}
-	Für dieses Beispiel wurde Collection+\ac{JSON} ausgewählt.
-		\newpage
+	Für dieses Beispiel wurde Collection+\ac{JSON}\cite{CJ} ausgewählt.
+	\subsection{Datenbank}
+	Im Normalfall werden die Ressourcen in einer Datenbank abgespeichert. Da es in diesem Beispielprogramm aber hauptsächlich um die Implementierung einer \ac{REST}ful-\ac{API} geht,
+	wird auf eine Datenbank verichtet und es werden die Ressourcen nur als Variablen im Programm gespeichert. Das heißt, falls das Programm beendet wird sind alle Daten verloren.
+	Dieses Beispielprogramm kann somit ohne Anpassungen nicht in einer produktiven System eingesetzt werden! Oft werden in Produktivsystemen \ac{noSQL} Datenbanken verwendet.
+	
+	\newpage
 	\subsubsection{Collection+\ac{JSON}}
 	Wenn beispielsweise die Root-\ac{URI} aufgerufen wird, liefert der Server folgende Antwort. 
 	\begin{lstlisting}[language=json,caption=Collection+\ac{JSON}-Repräsentation (application/vnd.collection+json)]
@@ -229,20 +234,163 @@
 	Als Protokoll wird \ac{HTTP} verwendet, weil es das am meisten verwendete für \ac{REST} ist.
 	\newpage
 	
+	\lstset{numbers=none}	%disable numbering for listings
 	\subsection{\ac{API} Beschreibung}
 	\subsubsection{POST /persons}
+	Um eine neue Person zu Erstellen wird die \ac{URI} "'http://localhost:1337/persons"' mit der POST-Methode aufgerufen.
+	\newline
+	
+	\begin{tabular}{|c|p{10cm}|}
+		\hline 
+		Methode & POST \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons"' \\ 
+		\hline 
+		Sent-Body &  
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "givenname",
+					"value": "Allen",
+					"promt": "givenname"
+				},
+				{
+					"name": "familyname",
+					"value": "David",
+					"promt": "familyname"
+				},
+				{
+					"name": "phonenumber",
+					"value": "0699 615 55 82",
+					"promt": "phonenumber"
+				},
+				{
+					"name": "address",
+					"value": "http://localhost:1337/address/0",
+					"promt": "Link to adress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 
+		\hline 
+		Response-Header & Location: http://localhost:1337/persons/4 \\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+		Response-Code & 201 Created \\ 
+		\hline 
+		cURL-Example & 	
+		\begin{verbatim}
+			curl --request POST \
+			--url http://localhost:1337/persons/ \
+			--header 'Content-Type: application/json' \
+			--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+	\end{tabular} 
+	\newpage
+
+
 	\subsubsection{POST /addresses}
+	Um eine neue Adresse zu Erstellen wird die \ac{URI} "'http://localhost:1337/addresses"' mit der POST-Methode aufgerufen.
+	\newline
+	\begin{tabular}{|c|p{10cm}|}
+		\hline 
+		Methode & POST \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/adresses"' \\ 
+		\hline 
+		Sent-Body &  
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "country",
+					"value": "Austria",
+					"promt": "country"
+				},
+				{
+					"name": "state",
+					"value": "Carinthia",
+					"promt": "state"
+				},
+				{
+					"name": "zipCode",
+					"value": "9560",
+					"promt": "zipCode"
+				},
+				{
+					"name": "city",
+					"value": "Powirtschach",
+					"promt": "city"
+				},
+				{
+					"name": "streetAddress",
+					"value": "Auenweg 71",
+					"promt": "streetAddress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 
+		\hline 
+		Response-Header & Location: http://localhost:1337/addresses/4 \\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+		Response-Code & 201 Created \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+			curl --request POST \
+			--url http://localhost:1337/addresses/ \
+			--header 'Content-Type: application/json' \
+			--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+	\end{tabular} 
+	\newpage
+	
 	\subsubsection{GET /persons}
+		Um eine neue Adresse zu Erstellen wird die \ac{URI} "'http://localhost:1337/addresses"' mit der POST-Methode aufgerufen.
+	\newline
+	\begin{tabular}{|c|p{10cm}|}
+		\hline 
+		Methode & POST \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/adresses"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request POST \
+		--url http://localhost:1337/addresses/ \
+		--header 'Content-Type: application/json' \
+		--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+	\end{tabular} 
+	\newpage
 	\subsubsection{GET /addresses}
 	\subsubsection{PUT /persons}
 	\subsubsection{PUT /addresses}
 	\subsubsection{DELETE /persons}
 	\subsubsection{DELETE /addresses}
 	\subsection{Source Code}
-	
-	
-	
-	
 	\newpage
 	
 	\setcounter{secnumdepth}{0}	%disable numbering of sections
@@ -259,7 +407,8 @@
 		\acro{JSON-LD}{\ac{JSON} for Linked Documents}
 		\acro{HAL}{Hypertext Application Language}
 		\acro{SIREN}{Structured Interface for Representing Entities}
-		
+		\acro{SQL}{Structured Query Language}
+		\acro{noSQL}{Not only \ac{SQL}}
 	\end{acronym}
 	\newpage
 
