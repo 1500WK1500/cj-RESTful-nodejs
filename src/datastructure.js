@@ -9,18 +9,18 @@ class Datastructure {
     this.uniqueID = 0;
   }
 
-  getAll(baseadress) {
-    baseadress = baseadress.replace(/\/+$/, ""); //remove trailing slashes
+  getAll(baseaddress) {
+    baseaddress = baseaddress.replace(/\/+$/, ""); //remove trailing slashes
     var items = [];
     var i = 0;
     for (i = 0; i < this.data.length; i++) {
-      items.push(this.convertDataToCJ(baseadress, this.data[i]));
+      items.push(this.convertDataToCJ(baseaddress, this.data[i]));
     }
     return items;
   }
 
-  getByID(baseadress, id) {
-    baseadress = baseadress.replace(/\/+$/, ""); //remove trailing slashes
+  getByID(baseaddress, id) {
+    baseaddress = baseaddress.replace(/\/+$/, ""); //remove trailing slashes
     var items = [];
     var itemdata;
     var itemdataarray = [];
@@ -28,7 +28,7 @@ class Datastructure {
     var i = 0;
     for (i = 0; i < this.data.length; i++) {
       if (this.data[i].id == id) {
-        return (this.convertDataToCJ(baseadress, this.data[i]));
+        return (this.convertDataToCJ(baseaddress, this.data[i]));
       }
     }
     return undefined;

@@ -3,7 +3,7 @@
 var paths = require('./paths.js');
 var cj = require('./cj.js');
 var persons = require('./persons.js');
-var adresses = require('./adresses.js');
+var addresses = require('./addresses.js');
 var db = require('./database.js');
 var datab = new db.Database();
 

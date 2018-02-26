@@ -2,35 +2,35 @@
 
 //var cj = require('./cj.js');
 var persons = require('./persons.js');
-var adresses = require('./adresses.js');
+var addresses = require('./addresses.js');
 
 class Database {
   constructor() {
-    this.datastructures = []; //array of datastructures (persons or adresses)
+    this.datastructures = []; //array of datastructures (persons or addresses)
     var personDB = new persons.Persons('persons');
     personDB.generateTestData();
     this.datastructures.push(personDB);
 
-    var adressDB = new adresses.Adresses('adresses');
-    adressDB.generateTestData();
-    this.datastructures.push(adressDB);
+    var addressDB = new addresses.Addresses('addresses');
+    addressDB.generateTestData();
+    this.datastructures.push(addressDB);
   }
 
-  getItemsArray(baseadress, uri) {
+  getItemsArray(baseaddress, uri) {
     var i = 0;
     for (i = 0; i < this.datastructures.length; i++) {
       if (this.datastructures[i].uri == uri) {
-        return this.datastructures[i].getAll(baseadress);
+        return this.datastructures[i].getAll(baseaddress);
       }
     }
     return undefined;
   }
 
-  getItem(baseadress, uri, id) {
+  getItem(baseaddress, uri, id) {
     var i = 0;
     for (i = 0; i < this.datastructures.length; i++) {
       if (this.datastructures[i].uri == uri) {
-        return this.datastructures[i].getByID(baseadress, id);
+        return this.datastructures[i].getByID(baseaddress, id);
       }
     }
     return undefined;

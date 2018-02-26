@@ -9,7 +9,7 @@ class Collection {
     this.collection.items = [];
     this.collection.links = [];
     this.collection.queries = [];
-    this.collection.templates = [];
+    this.collection.template = {};
 
     //Add home link
     this.addLink('home', href, '');
@@ -50,7 +50,7 @@ class Collection {
   }
 
   addTemplate(template) {
-    this.collection.templates.push(template);
+    this.collection.template = template;
   }
 }
 exports.Collection = Collection;

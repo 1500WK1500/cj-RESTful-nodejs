@@ -1,0 +1,760 @@
+\documentclass[listof=totoc]{article}
+\usepackage[numbers]{natbib}					%use numbers for litrature references
+\usepackage[footnote]{acronym}					%footnotes for acronyms
+\usepackage[utf8]{inputenc}						%utf8 support (ö, ü, ä, ...)
+\usepackage[ngerman]{babel}						%german names for table of contens and litratur
+\usepackage[nottoc,notlot,notlof]{tocbibind}	%adds bibliographie to the table of contens
+\usepackage{a4wide}								%use more space of the page
+\usepackage{hyperref}							%clickable links
+\usepackage{longtable}							%table over multiple pages
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=blue
+}
+
+\input{xmllistings.tex}
+\input{jsonlistings.tex}
+\input{javascriptlistings.tex}
+
+
+%opening
+\title{RESTful API mit node.js}
+\author{AUTHOR}
+
+\begin{document}
+	\maketitle
+	\begin{abstract}
+		\begin{center}
+			Dieses Dokument beschriebt die Theorie hinter \ac{REST} und \\
+			die Implementierung einer RESTful \ac{API} mithilfe von node.js
+		\end{center}
+	\end{abstract}
+	\newpage
+	
+	\tableofcontents 
+	\lstlistoflistings
+	
+	\newpage
+	
+	\section{Allgemeines über \ac{REST}}
+	\ac{REST} ist ein Programmierparadigma und wurde von Roy Fielding in seiner Dissertation\cite{REST_THESIS} spezifiziert.
+	\newline \newline
+	Die wichtigsten Eigenschaften\cite[p.~2]{RESTBOOK} sind:
+	\begin{itemize}  
+		\item Alles ist eine Ressource und jede ist mit einer eindeutigen Adresse identifizierbar (\ac{URI})
+		\item Verwendung von Standard-\ac{HTTP} Methoden\footnote{Keine strenge Voraussetzung für \ac{REST}, in der Praxis wird aber hauptsächlich \ac{HTTP} verwendet}
+		\item Ressourcen können mehrerer Repräsentationen besitzen
+		\item Zustandslose Kommunikation
+		\item  \ac{HATEOAS}
+	\end{itemize}
+	\subsection{Ressourcen}
+	Die Ressourcen sind unter einer eindeutigen Adresse (\ac{URI}) erreichbar und können unter verschiedenen Repräsentationen dargestellt werden. Siehe Kapitel \ref{subsec:Repraesentation}.
+	\newline \newline
+	Zum Beispiel kann ein Ressource folgende \ac{URI} haben "http://ipaddress:port/path/Ressource"
+	%Die Repräsentation kann jedoch in verschiedenen Formaten erfolgen.
+	\subsection{\ac{HTTP}-Methoden}
+	Die Verwendung von \ac{HTTP}-Methoden ist keine strickte Voraussetzung für REST.
+	In der Praxis wird jedoch hauptsächlich \ac{HTTP} verwendet für REST. Deshalb wird hier auch nur auf die Implementierung mit \ac{HTTP}-Methoden eingegangen.
+	\newline \newline
+	Es sind folgende Operationen laut RFC2616\cite{RFC2616} im \ac{HTTP}-Protokoll möglich:
+	\begin{itemize} 
+		\setlength{\itemsep}{0pt} 
+		\item GET
+		\item POST
+		\item PUT
+		\item DELETE
+		\item HEAD
+		\item OPTIONS
+		\item TRACE
+		\item CONNECT
+	\end{itemize}
+	\begin{center}
+	Für \ac{REST} werden die folgenden 4 \ac{CRUD}-Operationen verwendet. 
+	\newline \newline
+	\begin{tabular}{|c|c|}
+		\hline 
+		Create & POST \\ 
+		\hline 
+		Read & GET \\ 
+		\hline 
+		Update & PUT \\ 
+		\hline 
+		Delete & DELETE \\ 
+		\hline 
+	\end{tabular} 
+	\end{center}
+	\newpage
+	\subsubsection{POST - Create}
+	Erzeugt eine neue Ressource.
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		POST & /Persons & Ressource Data & /Persons/123 \\ 
+		\hline 
+	\end{tabular} 
+	\newline
+	\subsubsection{GET - Read}
+	Um eine Ressource anzuzeigen wird die GET-Operation verwendet. 
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		GET & /Persons/123 & none & Resource Data \\ 
+		\hline 
+	\end{tabular} 
+	\subsubsection{PUT - Update}
+	Verändert eine bestehende Ressource.
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		PUT & /Persons/123 & Ressource Data & none \\ 
+		\hline 
+	\end{tabular} 
+	\subsubsection{DELETE - Delete}
+	Löscht eine Ressource.
+	\newline \newline
+	Beispiel:
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		Method & URI & Sent Data & Response \\ 
+		\hline 
+		DELETE & /Persons/123 & none & none \\ 
+		\hline 
+	\end{tabular} 
+	\subsection{Repräsentation}\label{subsec:Repraesentation}
+	Eine Ressource kann unterschiedliche Repräsentationen besitzen.
+	Als Beispiel wird als eine Ressource eine Person betrachtet. Diese enthält folgende Daten:
+	\begin{itemize} 
+		\setlength{\itemsep}{0pt} 
+		\item Vorname
+		\item Nachname
+		\item Telefonnummer
+	\end{itemize}
+	Die Person kann in verschiedenen Formaten dargestellt werden. 
+	In \ac{JSON} würde die Repräsentation so aussehen:
+	
+	
+	\begin{lstlisting}[language=json,caption=\ac{JSON}-Repräsentation (application/json)]
+		{"vorname":"Hans","nachname":"Mueller","telefonnummer":"0680123456789"}
+	\end{lstlisting}
+	
+	Die selbe Person kann allerdings auch in \ac{XML} dargestellt werden:
+	\begin{lstlisting}[language=XML,caption=\ac{XML}-Repräsentation (application/xml)]
+	<?xml version="1.0" encoding="UTF-8"?>
+	<root>
+		<nachname>Mueller</nachname>
+		<telefonnummer>0680123456789</telefonnummer>
+		<vorname>Hans</vorname>
+	</root>
+	\end{lstlisting}
+	\newpage
+	
+	
+	\subsection{Zustandslose Kommunikation}
+	Eine Vorraussetzung für eine \ac{REST}ful \ac{API} ist die Zustandslosigkeit. Weder Server noch Client sollten Zustandsinformationen speicher. Das heißt Anfragen an den Server sollten in sich geschlossen sein. Dies hat den Vorteil der einfachen Skalierbarkeit, das heißt Anfragen können an unterschiedliche Server verteilt werden. \cite[p.~6]{RESTBOOK}
+	
+	\subsection{Hypermedia as the Engine of Application State}
+	\ac{HATEOAS} ist laut Roy Fielding eine Voraussetzung für eine \ac{REST}ful \ac{API}.\cite{HATEOAS_ROY}
+	Dazu müssen Ressourcen Links (Hypermedia) zu anderen Ressourcen enthalten können. Es sollte somit möglich sein nur durch Kenntnis der Root-\ac{URI} zu allen möglichen \ac{URI}s weiter zu navigieren. 
+	Somit kann man von einer Ressource zur Nächsten navigieren. 
+	\newline
+	Oft werden jedoch auch fälschlicherweise \ac{API}s als \ac{REST}ful bezeichnet die nicht \ac{HATEOAS} verwenden.
+	\newpage
+	
+	\section{Beispielprogramm}
+	Da \ac{REST} nur ein Programmierparadigma ist, hat man sehr viel Möglichkeiten bei der Implementierung. Programmiersprache, Repräsentation der Daten sowie Protokoll für die Datenübertragung sind nicht vorgegeben durch \ac{REST}. Deshalb ist der erste Schritt für die Implementierung notwendig zu entscheiden welche Tools verwendet werden sollen.
+	\subsection{Programmiersprache}
+	Als Programmiersprache wird in diesem Beispiel Node.js in der Version v6.11.4 verwendet.
+	\begin{quote}
+		"Node.js$^{\tiny{\textregistered}}$ ist eine JavaScript-Laufzeitumgebung, die auf Chromes V8 JavaScript-Engine basiert. Durch ein Event-basiertes, blockierungsfreies I/O-Modell ist Node.js schlank und effizient."
+		\footnote{https://nodejs.org/de/}
+	\end{quote}
+	\subsection{Daten Repräsentation}
+	Da Ressourcen durch unterschiedliche Repräsentationen dargestellt werden können, könnten prinzipiell auch mehrere Repräsentationen vom Beispielprogramm unterstützt werden. Der Einfachheit halber wird allerdings nur ein Format verwendet.
+	\ac{JSON} bietet sich aufgrund seiner weiten Verbreitung und Kompatibilität mit JavaScript an. Doch \ac{JSON} alleine bietet keine Verlinkungen zwischen Datensätzen an und erfüllt deshalb nicht \ac{HATEOAS}. Deshalb gibt es zahlreiche Formate die auf \ac{JSON} basieren aber zusätzlich auch \ac{HATEOAS} unterstützen. \cite{HATEOAS_FORMATS}
+	\begin{itemize} 
+		\setlength{\itemsep}{0pt} 
+		\item \ac{JSON-LD}
+		\item \ac{HAL}
+		\item Collection+\ac{JSON}
+		\item \ac{SIREN}
+	\end{itemize}
+	Für dieses Beispiel wurde Collection+\ac{JSON}\cite{CJ} ausgewählt.
+	\subsection{Datenbank}
+	Im Normalfall werden die Ressourcen in einer Datenbank abgespeichert. Da es in diesem Beispielprogramm aber hauptsächlich um die Implementierung einer \ac{REST}ful-\ac{API} geht,
+	wird auf eine Datenbank verichtet und es werden die Ressourcen nur als Variablen im Programm gespeichert. Das heißt, falls das Programm beendet wird sind alle Daten verloren.
+	Dieses Beispielprogramm kann somit ohne Anpassungen nicht in einer produktiven System eingesetzt werden! Oft werden in Produktivsystemen \ac{noSQL} Datenbanken verwendet.
+	
+	\newpage
+	\subsubsection{Collection+\ac{JSON}}
+	Wenn beispielsweise die Root-\ac{URI} aufgerufen wird, liefert der Server folgende Antwort. 
+	\begin{lstlisting}[language=json,caption=Collection+\ac{JSON}-Repräsentation (application/vnd.collection+json)]
+	{
+		"collection": {
+			"version": "1.0",
+			"href": "http://localhost:1337",
+			"items": [],
+			"links": [
+				{
+					"rel": "home",
+					"href": "http://localhost:1337",
+					"promt": ""
+				},
+				{
+					"rel": "persons",
+					"href": "http://localhost:1337/persons",
+					"promt": ""
+				},
+				{
+					"rel": "adresses",
+					"href": "http://localhost:1337/adresses",
+					"promt": ""
+				}
+			],
+			"queries": [],
+			"templates": []
+		}
+	}
+	\end{lstlisting}
+	Man sieht, dass man nun 2 Möglichkeiten hat weiter zu navigieren.
+	\newline
+	"'http://localhost:1337/persons"' oder "'http://localhost:1337/adresses"'
+	
+	\subsection{Protokoll}
+	Als Protokoll wird \ac{HTTP} verwendet, weil es das am meisten verwendete für \ac{REST} ist.
+	\newpage
+	
+	\lstset{numbers=none}	%disable numbering for listings
+	\subsection{\ac{API} Beschreibung}
+	\subsubsection{POST /persons}
+	Um eine neue Person zu Erstellen wird die \ac{URI} "'http://localhost:1337/persons"' mit der POST-Methode aufgerufen.
+	\newline
+	
+	\begin{tabular}{|c|p{10cm}|}
+		\hline 
+		Methode & POST \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons"' \\ 
+		\hline 
+		Sent-Body &  
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "givenname",
+					"value": "Allen",
+					"promt": "givenname"
+				},
+				{
+					"name": "familyname",
+					"value": "David",
+					"promt": "familyname"
+				},
+				{
+					"name": "phonenumber",
+					"value": "0699 615 55 82",
+					"promt": "phonenumber"
+				},
+				{
+					"name": "address",
+					"value": "http://localhost:1337/address/0",
+					"promt": "Link to adress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 
+		\hline 
+		Response-Header & Location: http://localhost:1337/persons/4 \\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+		Response-Code & 201 Created \\ 
+		\hline 
+		cURL-Example & 	
+		\begin{verbatim}
+			curl --request POST \
+			--url http://localhost:1337/persons/ \
+			--header 'Content-Type: application/json' \
+			--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+	\end{tabular} 
+	\newpage
+
+
+	\subsubsection{POST /addresses}
+	Um eine neue Adresse zu Erstellen wird die \ac{URI} "'http://localhost:1337/addresses"' mit der POST-Methode aufgerufen.
+	\newline
+	\begin{tabular}{|c|p{10cm}|}
+		\hline 
+		Methode & POST \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addresses"' \\ 
+		\hline 
+		Sent-Body &  
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "country",
+					"value": "Austria",
+					"promt": "country"
+				},
+				{
+					"name": "state",
+					"value": "Carinthia",
+					"promt": "state"
+				},
+				{
+					"name": "zipCode",
+					"value": "9560",
+					"promt": "zipCode"
+				},
+				{
+					"name": "city",
+					"value": "Powirtschach",
+					"promt": "city"
+				},
+				{
+					"name": "streetAddress",
+					"value": "Auenweg 71",
+					"promt": "streetAddress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 
+		\hline 
+		Response-Header & Location: http://localhost:1337/addresses/4 \\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+		Response-Code & 201 Created \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+			curl --request POST \
+			--url http://localhost:1337/addresses/ \
+			--header 'Content-Type: application/json' \
+			--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+	\end{tabular} 
+	\newpage
+	
+	\subsubsection{GET /persons}
+		Um eine alle Personen anzuzeigen wird die \ac{URI} "'http://localhost:1337/persons"' mit der GET-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & GET \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\scriptsize
+		\begin{verbatim}
+		curl --request GET --url http://localhost:1337/persons/ \
+		--header 'Content-Type: application/json'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & 
+		\scriptsize
+		\begin{lstlisting}[language=json]
+		{
+			"collection": {
+				"version": "1.0",
+				"href": "http://localhost:1337",
+				"items": [
+				{
+					"href": "http://localhost:1337/persons/0",
+					"data": [
+					{
+						"name": "givenname",
+						"value": "Mario",
+						"promt": "givenname"
+					},
+					{
+						"name": "familyname",
+						"value": "Wirtz",
+						"promt": "familyname"
+					},
+					{
+						"name": "phonenumber",
+						"value": "03372 63 80 71",
+						"promt": "phonenumber"
+					}
+					],
+					"links": [
+					{
+						"rel": "address",
+						"href": "http://localhost:1337/addresses/0",
+						"promt": "Link to address"
+					}
+					]
+				},{...}	//more persons
+				],
+				"links": [
+				{
+					"rel": "home",
+					"href": "http://localhost:1337",
+					"promt": ""
+				}
+				],
+				"queries": [],
+				"template": {
+					"data": [
+					{
+						"name": "givenname",
+						"value": "",
+						"promt": "givenname"
+					},
+					{
+						"name": "familyname",
+						"value": "",
+						"promt": "familyname"
+					},
+					{
+						"name": "phonenumber",
+						"value": "",
+						"promt": "phonenumber"
+					},
+					{
+						"name": "address",
+						"value": "",
+						"promt": "Link to address"
+					}
+					]
+				}
+			}
+		}
+		\end{lstlisting}	\\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{GET /addresses}
+	Um eine alle Adressen anzuzeigen wird die \ac{URI} "'http://localhost:1337/addresses"' mit der GET-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & GET \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addreses"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\scriptsize
+		\begin{verbatim}
+		curl --request GET --url http://localhost:1337/persons/ \
+		--header 'Content-Type: application/json'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & 
+		\scriptsize
+		\begin{lstlisting}[language=json]
+		{"collection": {
+				"version": "1.0",
+				"href": "http://localhost:1337",
+				"items": [
+				{
+					"href": "http://localhost:1337/addresses/0",
+					"data": [
+					{
+						"name": "country",
+						"value": "Germany",
+						"promt": "country"
+					},
+					{
+						"name": "state",
+						"value": "Bayern",
+						"promt": "state"
+					},
+					{
+						"name": "zipCode",
+						"value": "Stephanskirchen",
+						"promt": "zipCode"
+					},
+					{
+						"name": "city",
+						"value": "83071",
+						"promt": "city"
+					},
+					{
+						"name": "streetAddress",
+						"value": "Jahnstrasse 31",
+						"promt": "streetAddress"
+					}
+					],
+					"links": []
+				}, {...}	//more addresses
+				],
+				"links": [
+				{
+					"rel": "home",
+					"href": "http://localhost:1337",
+					"promt": ""
+				}
+				],
+				"queries": [],
+				"template": {
+					"data": [
+					{
+						"name": "country",
+						"value": "",
+						"promt": "country"
+					},
+					{
+						"name": "state",
+						"value": "",
+						"promt": "state"
+					},
+					{
+						"name": "zipCode",
+						"value": "",
+						"promt": "zipCode"
+					},
+					{
+						"name": "city",
+						"value": "",
+						"promt": "city"
+					},
+					{
+						"name": "streetAddress",
+						"value": "",
+						"promt": "streetAddress"
+					}
+					]
+				}
+			}
+		}
+		\end{lstlisting}	\\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{PUT /persons}
+	Um die Daten einer bestehenden Person zu ändern wird die \ac{URI} "'http://localhost:1337/persons/ID"' mit der PUT-Methode aufgerufen.
+		\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & PUT \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons/0"' \\ 
+		\hline 
+		Sent-Body & 
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "givenname",
+					"value": "Allen",
+					"promt": "givenname"
+				},
+				{
+					"name": "familyname",
+					"value": "David",
+					"promt": "familyname"
+				},
+				{
+					"name": "phonenumber",
+					"value": "0699 615 55 82",
+					"promt": "phonenumber"
+				},
+				{
+					"name": "address",
+					"value": "http://localhost:1337/address/0",
+					"promt": "Link to adress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 	
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+			curl --request PUT \
+			--url http://localhost:1337/persons/0 \
+			--header 'Content-Type: application/json' \
+			--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{PUT /addresses}
+		Um die Daten einer bestehenden Person zu ändern wird die \ac{URI} "'http://localhost:1337/persons/ID"' mit der PUT-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & PUT \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addresses/0"' \\ 
+		\hline 
+		Sent-Body & 
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "country",
+					"value": "Austria",
+					"promt": "country"
+				},
+				{
+					"name": "state",
+					"value": "Carinthia",
+					"promt": "state"
+				},
+				{
+					"name": "zipCode",
+					"value": "9560",
+					"promt": "zipCode"
+				},
+				{
+					"name": "city",
+					"value": "Powirtschach",
+					"promt": "city"
+				},
+				{
+					"name": "streetAddress",
+					"value": "Auenweg 71",
+					"promt": "streetAddress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request PUT \
+		--url http://localhost:1337/persons/0 \
+		--header 'Content-Type: application/json' \
+		--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{DELETE /persons}
+	Um eine Person zu löschen wird die \ac{URI} "'http://localhost:1337/persons/ID"' mit der DELETE-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & DELETE \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons/0"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 204 No Content \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request DELETE \
+		--url http://localhost:1337/persons/0
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
+	\subsubsection{DELETE /addresses}
+	Um eine Adresse zu löschen wird die \ac{URI} "'http://localhost:1337/addresses/ID"' mit der DELETE-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & DELETE \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addresses/0"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 204 No Content \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request DELETE \
+		--url http://localhost:1337/addresses/0
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	
+	\subsection{Source Code}
+	Der Source Code dieses Beispielprogrammes ist auf GitHub verfügbar: \newline
+	 \href{https://github.com/1500WK1500/cj-RESTful-nodejs}{https://github.com/1500WK1500/cj-RESTful-nodejs}
+	\newpage
+	
+	\setcounter{secnumdepth}{0}	%disable numbering of sections
+	\section{Abkürzungen}
+	\begin{acronym}[HATEOAS]
+		\acro{REST}{Representational State Transfer}
+		\acro{API}{Application Programming Interface}
+		\acro{URI}{Unique Adress Identifier}
+		\acro{HTTP}{Hypertext Transfer Protocol}
+		\acro{HATEOAS}{Hypermedia as the Engine of Application State}
+		\acro{CRUD}{Create Read Update Delete}
+		\acro{JSON}{JavaScript Object Notation}
+		\acro{XML}{Extensible Markup Language}
+		\acro{JSON-LD}{\ac{JSON} for Linked Documents}
+		\acro{HAL}{Hypertext Application Language}
+		\acro{SIREN}{Structured Interface for Representing Entities}
+		\acro{SQL}{Structured Query Language}
+		\acro{noSQL}{Not only \ac{SQL}}
+	\end{acronym}
+	\newpage
+
+	
+
+	\bibliographystyle{plainnat}
+	\bibliography{literatur}
+\end{document}

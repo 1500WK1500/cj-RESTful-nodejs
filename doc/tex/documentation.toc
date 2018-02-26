@@ -1,0 +1,29 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Allgemeines \IeC {\"u}ber \ac {REST}}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Ressourcen}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}\ac {HTTP}-Methoden}{3}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}POST - Create}{4}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}GET - Read}{4}{subsubsection.1.2.2}
+\contentsline {subsubsection}{\numberline {1.2.3}PUT - Update}{4}{subsubsection.1.2.3}
+\contentsline {subsubsection}{\numberline {1.2.4}DELETE - Delete}{4}{subsubsection.1.2.4}
+\contentsline {subsection}{\numberline {1.3}Repr\IeC {\"a}sentation}{4}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Zustandslose Kommunikation}{5}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Hypermedia as the Engine of Application State}{5}{subsection.1.5}
+\contentsline {section}{\numberline {2}Beispielprogramm}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Programmiersprache}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Daten Repr\IeC {\"a}sentation}{6}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Datenbank}{6}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Collection+\ac {JSON}}{7}{subsubsection.2.3.1}
+\contentsline {subsection}{\numberline {2.4}Protokoll}{7}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}\ac {API} Beschreibung}{8}{subsection.2.5}
+\contentsline {subsubsection}{\numberline {2.5.1}POST /persons}{8}{subsubsection.2.5.1}
+\contentsline {subsubsection}{\numberline {2.5.2}POST /addresses}{9}{subsubsection.2.5.2}
+\contentsline {subsubsection}{\numberline {2.5.3}GET /persons}{10}{subsubsection.2.5.3}
+\contentsline {subsubsection}{\numberline {2.5.4}GET /addresses}{12}{subsubsection.2.5.4}
+\contentsline {subsubsection}{\numberline {2.5.5}PUT /persons}{14}{subsubsection.2.5.5}
+\contentsline {subsubsection}{\numberline {2.5.6}PUT /addresses}{15}{subsubsection.2.5.6}
+\contentsline {subsubsection}{\numberline {2.5.7}DELETE /persons}{16}{subsubsection.2.5.7}
+\contentsline {subsubsection}{\numberline {2.5.8}DELETE /addresses}{16}{subsubsection.2.5.8}
+\contentsline {subsection}{\numberline {2.6}Source Code}{17}{subsection.2.6}
+\contentsline {section}{Abk\IeC {\"u}rzungen}{18}{section*.16}
+\contentsline {section}{Literaturverzeichnis}{19}{section*.17}
