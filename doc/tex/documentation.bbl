@@ -10,7 +10,7 @@ Mike Amundsen.
 \newblock \emph{Collection+JSON - Document Format}.
 \newblock 2013.
 \newblock URL \url{http://amundsen.com/media-types/collection/}.
-\newblock visited 2018-02-09.
+\newblock visited 2018-02-26.
 
 \bibitem[Bojinov(2015)]{RESTBOOK}
 Valentin Bojinov.
@@ -24,8 +24,8 @@ Roy Fielding.
   Architectures}.
 \newblock PhD thesis, University of California, 2000.
 \newblock
-  \url{https://www.ics.uci.edu/fielding/pubs/dissertation/fielding\_dissertation\_2up.pdf},
-  visited 2018-02-09.
+  \url{https://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation_2up.pdf},
+  visited 2018-02-26.
 
 \bibitem[Fielding(2008)]{HATEOAS_ROY}
 Roy Fielding.
@@ -33,7 +33,7 @@ Roy Fielding.
 \newblock 2008.
 \newblock URL
   \url{http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven}.
-\newblock visited 2018-02-09.
+\newblock visited 2018-02-26.
 
 \bibitem[Fielding et~al.(1999)Fielding, Gettys, Mogul, Nielsen, Masinter,
   Leach, and Berners-Lee]{RFC2616}
@@ -42,7 +42,7 @@ Roy~T. Fielding, James Gettys, Jeffrey~C. Mogul, Henrik~Frystyk Nielsen, Larry
 \newblock \emph{Hypertext Transfer Protocol -- HTTP/1.1}.
 \newblock Number 2616. RFC Editor, June 1999.
 \newblock URL \url{http://www.rfc-editor.org/rfc/rfc2616.txt}.
-\newblock visited 2018-02-09.
+\newblock visited 2018-02-26.
 
 \bibitem[Sookocheff(2014)]{HATEOAS_FORMATS}
 Kevin Sookocheff.
@@ -51,6 +51,6 @@ Kevin Sookocheff.
 \newblock 2014.
 \newblock URL
   \url{https://sookocheff.com/post/api/on-choosing-a-hypermedia-format/}.
-\newblock visited 2018-02-09.
+\newblock visited 2018-02-26.
 
 \end{thebibliography}

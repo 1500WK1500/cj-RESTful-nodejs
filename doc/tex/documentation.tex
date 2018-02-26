@@ -6,12 +6,13 @@
 \usepackage[nottoc,notlot,notlof]{tocbibind}	%adds bibliographie to the table of contens
 \usepackage{a4wide}								%use more space of the page
 \usepackage{hyperref}							%clickable links
+\usepackage{longtable}							%table over multiple pages
 \hypersetup{
 	colorlinks,
 	citecolor=black,
 	filecolor=black,
 	linkcolor=black,
-	urlcolor=black
+	urlcolor=blue
 }
 
 \input{xmllistings.tex}
@@ -302,7 +303,7 @@
 		\hline 
 		Methode & POST \\ 
 		\hline 
-		\ac{URI} & "'http://localhost:1337/adresses"' \\ 
+		\ac{URI} & "'http://localhost:1337/addresses"' \\ 
 		\hline 
 		Sent-Body &  
 		\begin{lstlisting}[language=json]
@@ -358,39 +359,379 @@
 	\newpage
 	
 	\subsubsection{GET /persons}
-		Um eine neue Adresse zu Erstellen wird die \ac{URI} "'http://localhost:1337/addresses"' mit der POST-Methode aufgerufen.
+		Um eine alle Personen anzuzeigen wird die \ac{URI} "'http://localhost:1337/persons"' mit der GET-Methode aufgerufen.
 	\newline
-	\begin{tabular}{|c|p{10cm}|}
+	\begin{longtable}{|c|p{10cm}|}
 		\hline 
-		Methode & POST \\ 
+		Methode & GET \\ 
 		\hline 
-		\ac{URI} & "'http://localhost:1337/adresses"' \\ 
+		\ac{URI} & "'http://localhost:1337/persons"' \\ 
 		\hline 
 		Sent-Body & - \\ 
 		\hline 
 		Response-Header & - \\ 
 		\hline 
-		Response-Body & - \\ 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\scriptsize
+		\begin{verbatim}
+		curl --request GET --url http://localhost:1337/persons/ \
+		--header 'Content-Type: application/json'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & 
+		\scriptsize
+		\begin{lstlisting}[language=json]
+		{
+			"collection": {
+				"version": "1.0",
+				"href": "http://localhost:1337",
+				"items": [
+				{
+					"href": "http://localhost:1337/persons/0",
+					"data": [
+					{
+						"name": "givenname",
+						"value": "Mario",
+						"promt": "givenname"
+					},
+					{
+						"name": "familyname",
+						"value": "Wirtz",
+						"promt": "familyname"
+					},
+					{
+						"name": "phonenumber",
+						"value": "03372 63 80 71",
+						"promt": "phonenumber"
+					}
+					],
+					"links": [
+					{
+						"rel": "address",
+						"href": "http://localhost:1337/addresses/0",
+						"promt": "Link to address"
+					}
+					]
+				},{...}	//more persons
+				],
+				"links": [
+				{
+					"rel": "home",
+					"href": "http://localhost:1337",
+					"promt": ""
+				}
+				],
+				"queries": [],
+				"template": {
+					"data": [
+					{
+						"name": "givenname",
+						"value": "",
+						"promt": "givenname"
+					},
+					{
+						"name": "familyname",
+						"value": "",
+						"promt": "familyname"
+					},
+					{
+						"name": "phonenumber",
+						"value": "",
+						"promt": "phonenumber"
+					},
+					{
+						"name": "address",
+						"value": "",
+						"promt": "Link to address"
+					}
+					]
+				}
+			}
+		}
+		\end{lstlisting}	\\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{GET /addresses}
+	Um eine alle Adressen anzuzeigen wird die \ac{URI} "'http://localhost:1337/addresses"' mit der GET-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & GET \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addreses"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\scriptsize
+		\begin{verbatim}
+		curl --request GET --url http://localhost:1337/persons/ \
+		--header 'Content-Type: application/json'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & 
+		\scriptsize
+		\begin{lstlisting}[language=json]
+		{"collection": {
+				"version": "1.0",
+				"href": "http://localhost:1337",
+				"items": [
+				{
+					"href": "http://localhost:1337/addresses/0",
+					"data": [
+					{
+						"name": "country",
+						"value": "Germany",
+						"promt": "country"
+					},
+					{
+						"name": "state",
+						"value": "Bayern",
+						"promt": "state"
+					},
+					{
+						"name": "zipCode",
+						"value": "Stephanskirchen",
+						"promt": "zipCode"
+					},
+					{
+						"name": "city",
+						"value": "83071",
+						"promt": "city"
+					},
+					{
+						"name": "streetAddress",
+						"value": "Jahnstrasse 31",
+						"promt": "streetAddress"
+					}
+					],
+					"links": []
+				}, {...}	//more addresses
+				],
+				"links": [
+				{
+					"rel": "home",
+					"href": "http://localhost:1337",
+					"promt": ""
+				}
+				],
+				"queries": [],
+				"template": {
+					"data": [
+					{
+						"name": "country",
+						"value": "",
+						"promt": "country"
+					},
+					{
+						"name": "state",
+						"value": "",
+						"promt": "state"
+					},
+					{
+						"name": "zipCode",
+						"value": "",
+						"promt": "zipCode"
+					},
+					{
+						"name": "city",
+						"value": "",
+						"promt": "city"
+					},
+					{
+						"name": "streetAddress",
+						"value": "",
+						"promt": "streetAddress"
+					}
+					]
+				}
+			}
+		}
+		\end{lstlisting}	\\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{PUT /persons}
+	Um die Daten einer bestehenden Person zu ändern wird die \ac{URI} "'http://localhost:1337/persons/ID"' mit der PUT-Methode aufgerufen.
+		\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & PUT \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons/0"' \\ 
+		\hline 
+		Sent-Body & 
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "givenname",
+					"value": "Allen",
+					"promt": "givenname"
+				},
+				{
+					"name": "familyname",
+					"value": "David",
+					"promt": "familyname"
+				},
+				{
+					"name": "phonenumber",
+					"value": "0699 615 55 82",
+					"promt": "phonenumber"
+				},
+				{
+					"name": "address",
+					"value": "http://localhost:1337/address/0",
+					"promt": "Link to adress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 	
+		\hline 
+		Response-Header & - \\ 
 		\hline 
 		Response-Code & 200 OK \\ 
 		\hline 
 		cURL-Example &  
 		\begin{verbatim}
-		curl --request POST \
-		--url http://localhost:1337/addresses/ \
+			curl --request PUT \
+			--url http://localhost:1337/persons/0 \
+			--header 'Content-Type: application/json' \
+			--data '{...}'
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	\subsubsection{PUT /addresses}
+		Um die Daten einer bestehenden Person zu ändern wird die \ac{URI} "'http://localhost:1337/persons/ID"' mit der PUT-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & PUT \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addresses/0"' \\ 
+		\hline 
+		Sent-Body & 
+		\begin{lstlisting}[language=json]
+		{
+			"template": {
+				"data": [
+				{
+					"name": "country",
+					"value": "Austria",
+					"promt": "country"
+				},
+				{
+					"name": "state",
+					"value": "Carinthia",
+					"promt": "state"
+				},
+				{
+					"name": "zipCode",
+					"value": "9560",
+					"promt": "zipCode"
+				},
+				{
+					"name": "city",
+					"value": "Powirtschach",
+					"promt": "city"
+				},
+				{
+					"name": "streetAddress",
+					"value": "Auenweg 71",
+					"promt": "streetAddress"
+				}
+				]
+			}
+		}
+		\end{lstlisting} \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 200 OK \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request PUT \
+		--url http://localhost:1337/persons/0 \
 		--header 'Content-Type: application/json' \
 		--data '{...}'
 		\end{verbatim}
 		\\ 
 		\hline 
-	\end{tabular} 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
 	\newpage
-	\subsubsection{GET /addresses}
-	\subsubsection{PUT /persons}
-	\subsubsection{PUT /addresses}
 	\subsubsection{DELETE /persons}
+	Um eine Person zu löschen wird die \ac{URI} "'http://localhost:1337/persons/ID"' mit der DELETE-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & DELETE \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/persons/0"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 204 No Content \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request DELETE \
+		--url http://localhost:1337/persons/0
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
 	\subsubsection{DELETE /addresses}
+	Um eine Adresse zu löschen wird die \ac{URI} "'http://localhost:1337/addresses/ID"' mit der DELETE-Methode aufgerufen.
+	\newline
+	\begin{longtable}{|c|p{10cm}|}
+		\hline 
+		Methode & DELETE \\ 
+		\hline 
+		\ac{URI} & "'http://localhost:1337/addresses/0"' \\ 
+		\hline 
+		Sent-Body & - \\ 
+		\hline 
+		Response-Header & - \\ 
+		\hline 
+		Response-Code & 204 No Content \\ 
+		\hline 
+		cURL-Example &  
+		\begin{verbatim}
+		curl --request DELETE \
+		--url http://localhost:1337/addresses/0
+		\end{verbatim}
+		\\ 
+		\hline 
+		Response-Body & - \\ 
+		\hline 
+	\end{longtable} 
+	\newpage
+	
 	\subsection{Source Code}
+	Der Source Code dieses Beispielprogrammes ist auf GitHub verfügbar: \newline
+	 \href{https://github.com/1500WK1500/cj-RESTful-nodejs}{https://github.com/1500WK1500/cj-RESTful-nodejs}
 	\newpage
 	
 	\setcounter{secnumdepth}{0}	%disable numbering of sections

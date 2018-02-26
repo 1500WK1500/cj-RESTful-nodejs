@@ -9,7 +9,7 @@ Warning--there's a number but no series in RFC2616
 Warning--empty publisher in HATEOAS_FORMATS
 You've used 6 entries,
             2773 wiz_defined-function locations,
-            635 strings with 5935 characters,
+            635 strings with 5934 characters,
 and the built_in function-call counts, 2226 in all, are:
 = -- 184
 > -- 116
