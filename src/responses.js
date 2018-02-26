@@ -50,7 +50,7 @@ exports.getID = getID;
 function deleteID(req, res, next) {
   var id = req.params.id;
   if (datab.deleteItem(paths.getRelPath(req), id) == true) {
-    res.status(200).send('');
+    res.status(204).send(''); //Status 204 No Content
   } else {
     next();
   }
@@ -78,9 +78,8 @@ function putData(req, res, next) {
   console.log('PUT DATA');
   if (sucsess) {
     res.type(cType);
-    res.location(paths.getBase(req) + '/' + paths.getRelPath(req) + '/' + id);
-    res.status(201).send(''); //Status 201 Created
-    //no body is sent back for POST requests
+    res.status(200).send(''); //Status 200 OK
+    //response body is optional for PUT requests
     //see: http://amundsen.com/media-types/collection/format/#read-write
   } else {
     next();
