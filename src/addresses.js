@@ -4,7 +4,7 @@ var cj = require('./cj.js');
 var ds = require('./datastructure.js');
 
 class Addresses extends ds.Datastructure {
-  addAddress(country, state, zipCode, city, streetAddress) {
+  addAddress(country, state, city, zipCode, streetAddress) {
     var address = {};
     address.country = country;
     address.state = state;
